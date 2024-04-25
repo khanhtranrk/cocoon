@@ -27,7 +27,7 @@ func (cr *ContactRepository) ListAllContacts() ([]*domain.Contact, error) {
   for rows.Next() {
     var contact domain.Contact
 
-    err = rows.Scan(&contact.CitizenId, &contact.Permission)
+    err = rows.Scan(&contact.CitizenId, &contact.Gate)
     if err != nil {
       return nil, err
     }
@@ -39,7 +39,7 @@ func (cr *ContactRepository) ListAllContacts() ([]*domain.Contact, error) {
 }
 
 func (cr *ContactRepository) GetContactByCitizenId(id uint64) (*domain.Contact, error) {
-  query := "SELECT citizen_id, permission FROM contacts WHERE citizen_id = ?"
+  query := "SELECT citizen_id, gate FROM contacts WHERE citizen_id = ?"
   rows, err := cr.db.Query(query, id)
   if err != nil {
     return nil, err
@@ -51,7 +51,7 @@ func (cr *ContactRepository) GetContactByCitizenId(id uint64) (*domain.Contact, 
   }
 
   var contact domain.Contact
-  err = rows.Scan(&contact.CitizenId, &contact.Permission)
+  err = rows.Scan(&contact.CitizenId, &contact.Gate)
   if err != nil {
     return nil, err
   }

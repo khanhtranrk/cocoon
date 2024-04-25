@@ -56,4 +56,28 @@ Cocoon:
     internal:
         struct Hidden
         struct Handle
-        struct 
+        struct
+
+letter -> Gate | Keeper -> Process | Handler -> Response
+
+
+Suspicious Letter Status:
+    1: SYSTEM_ERROR
+    2: ...
+    3: ...
+    4: ...
+
+Process Letter Status:
+    1: Wating
+    2: Keep
+    3: Done
+    4: Error
+
+Sent Letter Status:
+    1: Sent
+    2: Later
+
+Cocoon
+|- Mailily < Cocoon
+|- Taska < Cocoon
+

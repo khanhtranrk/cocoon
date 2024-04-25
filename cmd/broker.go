@@ -1,56 +1,51 @@
-package main
+package cocoon
 
 import (
 	"log"
+
+	"github.com/khanhtranrk/cocoon/internal/adapter/config"
 	"github.com/streadway/amqp"
 )
 
 type Broker struct {
-  hub *Hub
+  Connection *amqp.Connection
+  Channel *amqp.Channel
 }
 
-func NewBroker(hub *Hub) *Broker {
-  return &Broker{hub: hub}
+func NewBroker(cfg *config.Config) (*Broker, error) {
+  conn, err := amqp.Dial(cfg.BrokerUrl)
+  if err != nil {
+    return nil, err
+  }
+
+  channel, err := conn.Channel()
+  if err != nil {
+    return nil, err
+  }
+
+  return &Broker{Connection: conn, Channel: channel}, nil
 }
 
-func (b *Broker) Listen() {
-    conn, err := amqp.Dial("amqp://guest:guest@localhost:5672")
-    if err != nil {
-        log.Fatalf(err.Error())
-    }
-    defer conn.Close()
-
-    channel, err := conn.Channel()
-    if err != nil {
-        log.Fatalf(err.Error())
-    }
-    defer channel.Close()
-
-    msgs, err := channel.Consume("mavis", "rabit", true, false, false, false, nil)
+func (b *Broker) Listen(queue string, outChan chan []byte) {
+    msgs, err := b.Channel.Consume(queue, "", true, false, false, false, nil)
     if err != nil {
         log.Fatalf(err.Error())
     }
 
     for d := range msgs {
-      b.hub.broadcast <-d.Body
+      outChan <-d.Body
     }
 }
 
-func (b *Broker) SendMessage(message []byte) {
-  conn, err := amqp.Dial("amqp://guest:guest@localhost:5672")
-  if err != nil {
-      log.Fatalf(err.Error())
-  }
-  defer conn.Close()
-
-  channel, err := conn.Channel()
-  if err != nil {
-      log.Fatalf(err.Error())
-  }
-  defer channel.Close()
-
-  err = channel.Publish("", "test", false, false, amqp.Publishing{
+func (b *Broker) SendMessage(queue string, msg []byte) error {
+  return b.Channel.Publish("", queue, false, false, amqp.Publishing{
       ContentType: "text/plain",
-      Body: message,
+      Body: msg,
   })
+}
+
+// :
+func (b *Broker) Close() error {
+  b.Channel.Close()
+  b.Connection.Close()
 }

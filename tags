@@ -6,6 +6,7 @@
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 Broker	cmd/broker.go	/^type Broker struct {$/;"	t
 Broker	internal/adapter/handler/amqp/broker.go	/^type Broker struct {$/;"	t
+Certificate	internal/adapter/certificate/certificate.go	/^type Certificate struct {$/;"	t
 Citizen	external/cocoon/cocoon.go	/^type Citizen = domain.Citizen$/;"	t
 Citizen	internal/core/domain/citizen.go	/^type Citizen struct {$/;"	t
 CitizenRepository	internal/adapter/storage/sqlite/repository/citizen.go	/^type CitizenRepository struct {$/;"	t
@@ -13,9 +14,10 @@ CitizenRepository	internal/core/port/citizen.go	/^type CitizenRepository interfa
 CitizenService	internal/core/port/citizen.go	/^type CitizenService interface {$/;"	t
 CitizenService	internal/core/service/citizen.go	/^type CitizenService struct {$/;"	t
 Client	cmd/client.go	/^type Client struct {$/;"	t
+Close	cmd/broker.go	/^func (b *Broker) Close() error {$/;"	f
 Close	internal/adapter/handler/amqp/broker.go	/^func (b *Broker) Close() error {$/;"	f
 Cocoon	external/cocoon/cocoon.go	/^type Cocoon struct {$/;"	t
-CocoonHandleFuncs	external/cocoon/cocoon.go	/^type CocoonHandleFuncs interface {$/;"	t
+CocoonHandlerFuncs	external/cocoon/cocoon.go	/^type CocoonHandlerFuncs interface {$/;"	t
 Config	internal/adapter/config/config.go	/^type Config struct {$/;"	t
 Contact	external/cocoon/cocoon.go	/^type Contact = domain.Contact$/;"	t
 Contact	internal/core/domain/contact.go	/^type Contact struct {$/;"	t
@@ -23,60 +25,77 @@ ContactRepository	internal/adapter/storage/sqlite/repository/contact.go	/^type C
 ContactRepository	internal/core/port/contact.go	/^type ContactRepository interface {$/;"	t
 ContactService	internal/core/port/contact.go	/^type ContactService interface {$/;"	t
 ContactService	internal/core/service/contact.go	/^type ContactService struct {$/;"	t
-CreateHandleLaterLetter	internal/core/service/letter.go	/^func (ls *LetterService) CreateHandleLaterLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
 CreateLetter	internal/adapter/storage/sqlite/repository/letter.go	/^func (lt *LetterRepository) CreateLetter(letter *domain.Letter, tableName string) (*domain.Letter, error) {$/;"	f
-CreateReceivedLetter	internal/core/service/letter.go	/^func (ls *LetterService) CreateReceivedLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
-CreateResponseLaterLetter	internal/core/service/letter.go	/^func (ls *LetterService) CreateResponseLaterLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
+CreateProccessedLetter	internal/core/service/letter.go	/^func (ls *LetterService) CreateProccessedLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
 CreateSentLetter	internal/core/service/letter.go	/^func (ls *LetterService) CreateSentLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
-DeleteHandleLaterLetter	internal/core/service/letter.go	/^func (ls *LetterService) DeleteHandleLaterLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
+CreateSuspiciousLetter	internal/core/service/letter.go	/^func (ls *LetterService) CreateSuspiciousLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
 DeleteLetter	internal/adapter/storage/sqlite/repository/letter.go	/^func (lt *LetterRepository) DeleteLetter(letter *domain.Letter, tableName string) (*domain.Letter, error) {$/;"	f
-DeleteReceivedLetter	internal/core/service/letter.go	/^func (ls *LetterService) DeleteReceivedLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
-DeleteResponseLaterLetter	internal/core/service/letter.go	/^func (ls *LetterService) DeleteResponseLaterLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
+DeleteProccessedLetter	internal/core/service/letter.go	/^func (ls *LetterService) DeleteProccessedLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
 DeleteSentLetter	internal/core/service/letter.go	/^func (ls *LetterService) DeleteSentLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
-DeliverableToLetter	internal/core/util/letter.go	/^func DeliverableToLetter(dv []byte) (uint8, *domain.Letter, error) {$/;"	f
+DeleteSuspiciousLetter	internal/core/service/letter.go	/^func (ls *LetterService) DeleteSuspiciousLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
 GetCitizenById	internal/adapter/storage/sqlite/repository/citizen.go	/^func (cr *CitizenRepository) GetCitizenById(id uint64) (*domain.Citizen, error) {$/;"	f
 GetCitizenById	internal/core/service/citizen.go	/^func (cs *CitizenService) GetCitizenById(id uint64) (*domain.Citizen, error) {$/;"	f
 GetContactByCitizenId	internal/adapter/storage/sqlite/repository/contact.go	/^func (cr *ContactRepository) GetContactByCitizenId(id uint64) (*domain.Contact, error) {$/;"	f
 GetContactByCitizenId	internal/core/service/contact.go	/^func (cs *ContactService) GetContactByCitizenId(contactId uint64) (*domain.Contact, error) {$/;"	f
-GetHandleLaterLetterById	internal/core/service/letter.go	/^func (ls *LetterService) GetHandleLaterLetterById(id uint64) (*domain.Letter, error) {$/;"	f
 GetLetterById	internal/adapter/storage/sqlite/repository/letter.go	/^func (lt *LetterRepository) GetLetterById(id uint64, tableName string) (*domain.Letter, error) {$/;"	f
-GetReceivedLetterById	internal/core/service/letter.go	/^func (ls *LetterService) GetReceivedLetterById(id uint64) (*domain.Letter, error) {$/;"	f
-GetResponseLaterLetterById	internal/core/service/letter.go	/^func (ls *LetterService) GetResponseLaterLetterById(id uint64) (*domain.Letter, error) {$/;"	f
+GetProccessedLetterById	internal/core/service/letter.go	/^func (ls *LetterService) GetProccessedLetterById(id uint64) (*domain.Letter, error) {$/;"	f
 GetSentLetterById	internal/core/service/letter.go	/^func (ls *LetterService) GetSentLetterById(id uint64) (*domain.Letter, error) {$/;"	f
+GetSuspiciousLetterById	internal/core/service/letter.go	/^func (ls *LetterService) GetSuspiciousLetterById(id uint64) (*domain.Letter, error) {$/;"	f
 Hub	cmd/hub.go	/^type Hub struct {$/;"	t
+Keeper	external/cocoon/contact_gate.go	/^func (c *Cocoon) Keeper(dv []byte) {$/;"	f
 Letter	external/cocoon/cocoon.go	/^type Letter = domain.Letter$/;"	t
 Letter	internal/core/domain/letter.go	/^type Letter struct {$/;"	t
 LetterRepository	internal/adapter/storage/sqlite/repository/letter.go	/^type LetterRepository struct {$/;"	t
 LetterRepository	internal/core/port/letter.go	/^type LetterRepository interface {$/;"	t
 LetterService	internal/core/port/letter.go	/^type LetterService interface {$/;"	t
 LetterService	internal/core/service/letter.go	/^type LetterService struct {$/;"	t
-LetterToDeliverable	internal/core/util/letter.go	/^func LetterToDeliverable(lt *domain.Letter, selfId uint64, typ uint8) ([]byte, error) {$/;"	f
 ListAllCitizens	internal/adapter/storage/sqlite/repository/citizen.go	/^func (cr *CitizenRepository) ListAllCitizens() ([]*domain.Citizen, error) {$/;"	f
 ListAllCitizens	internal/core/service/citizen.go	/^func (cs *CitizenService) ListAllCitizens() ([]*domain.Citizen, error) {$/;"	f
 ListAllContacts	internal/adapter/storage/sqlite/repository/contact.go	/^func (cr *ContactRepository) ListAllContacts() ([]*domain.Contact, error) {$/;"	f
 ListAllContacts	internal/core/service/contact.go	/^func (cs *ContactService) ListAllContacts() ([]*domain.Contact, error) {$/;"	f
-Listen	cmd/broker.go	/^func (b *Broker) Listen() {$/;"	f
+Listen	cmd/broker.go	/^func (b *Broker) Listen(queue string, outChan chan []byte) {$/;"	f
+Listen	internal/adapter/handler/amqp/broker.go	/^func (b *Broker) Listen(queue string, outChan chan []byte) {$/;"	f
+ListenContactGate	external/cocoon/contact_gate.go	/^func (c *Cocoon) ListenContactGate()  {$/;"	f
+ListenContactGate	internal/adapter/certificate/contact_gate.go	/^func (c *Cocoon) ListenContactGate()  {$/;"	f
+LoadAbilityCertificate	internal/adapter/certificate/certificate.go	/^func LoadAbilityCertificate() (*Certificate, error) {$/;"	f
 New	external/cocoon/cocoon.go	/^func New() (*Cocoon, error) {$/;"	f
 New	internal/adapter/config/config.go	/^func New() (*Config, error) {$/;"	f
 New	internal/adapter/handler/amqp/broker.go	/^func New(cfg *config.Config) (*Broker, error) {$/;"	f
 New	internal/adapter/storage/sqlite/db.go	/^func New(config *config.Config) (*sql.DB, error) {$/;"	f
-NewBroker	cmd/broker.go	/^func NewBroker(hub *Hub) *Broker {$/;"	f
+NewBroker	cmd/broker.go	/^func NewBroker(cfg *config.Config) (*Broker, error) {$/;"	f
 NewCitizenRepository	internal/adapter/storage/sqlite/repository/citizen.go	/^func NewCitizenRepository(db *sql.DB) *CitizenRepository {$/;"	f
 NewCitizenService	internal/core/service/citizen.go	/^func NewCitizenService(rp port.CitizenRepository) *CitizenService {$/;"	f
 NewContactRepository	internal/adapter/storage/sqlite/repository/contact.go	/^func NewContactRepository(db *sql.DB) *ContactRepository {$/;"	f
 NewContactService	internal/core/service/contact.go	/^func NewContactService(rp port.ContactRepository) *ContactService {$/;"	f
 NewLetterRepository	internal/adapter/storage/sqlite/repository/letter.go	/^func NewLetterRepository(db *sql.DB) *LetterRepository {$/;"	f
 NewLetterService	internal/core/service/letter.go	/^func NewLetterService(lr port.LetterRepository) *LetterService {$/;"	f
-SendLetter	external/cocoon/cocoon.go	/^func (cc *Cocoon) SendLetter(lt *Letter) error {$/;"	f
-SendMessage	cmd/broker.go	/^func (b *Broker) SendMessage(message []byte) {$/;"	f
-UpdateHandleLaterLetter	internal/core/service/letter.go	/^func (ls *LetterService) UpdateHandleLaterLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
+ProcessRequestLetterChanHandler	external/cocoon/chan_handler.go	/^func (c *Cocoon) ProcessRequestLetterChanHandler() {$/;"	f
+ProcessResponseLetterChanHandler	external/cocoon/chan_handler.go	/^func (c *Cocoon) ProcessResponseLetterChanHandler() {$/;"	f
+SendMessage	cmd/broker.go	/^func (b *Broker) SendMessage(queue string, msg []byte) error {$/;"	f
+SendMessage	internal/adapter/handler/amqp/broker.go	/^func (b *Broker) SendMessage(queue string, msg []byte) error {$/;"	f
+SendRequestLetter	external/cocoon/cocoon.go	/^func (c *Cocoon) SendRequestLetter(lt *Letter) error {$/;"	f
+SendRequestLetterChanHandler	external/cocoon/chan_handler.go	/^func (c *Cocoon) SendRequestLetterChanHandler() {$/;"	f
+SendResponseLetter	external/cocoon/cocoon.go	/^func (c *Cocoon) SendResponseLetter(lt *Letter) error {$/;"	f
+SendResponseLetterChanHandler	external/cocoon/chan_handler.go	/^func (c *Cocoon) SendResponseLetterChanHandler() {$/;"	f
+SuspiciousLetterChanHandler	external/cocoon/chan_handler.go	/^func (c *Cocoon) SuspiciousLetterChanHandler() {$/;"	f
 UpdateLetter	internal/adapter/storage/sqlite/repository/letter.go	/^func (lt *LetterRepository) UpdateLetter(letter *domain.Letter, tableName string) (*domain.Letter, error) {$/;"	f
-UpdateReceivedLetter	internal/core/service/letter.go	/^func (ls *LetterService) UpdateReceivedLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
-UpdateResponseLaterLetter	internal/core/service/letter.go	/^func (ls *LetterService) UpdateResponseLaterLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
+UpdateProccessedLetter	internal/core/service/letter.go	/^func (ls *LetterService) UpdateProccessedLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
 UpdateSentLetter	internal/core/service/letter.go	/^func (ls *LetterService) UpdateSentLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
+UpdateSuspiciousLetter	internal/core/service/letter.go	/^func (ls *LetterService) UpdateSuspiciousLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
 addr	cmd/main.go	/^var addr = flag.String("addr", ":8080", "http service address")$/;"	v
 amqp	internal/adapter/handler/amqp/broker.go	/^package amqp$/;"	p
+certificate	internal/adapter/certificate/certificate.go	/^package certificate$/;"	p
+citizens	internal/adapter/storage/sqlite/migration/000001_create_relationship_table.up.sql	/^CREATE TABLE citizens ($/;"	t
+citizens.citizens_index_on_id	internal/adapter/storage/sqlite/migration/000001_create_relationship_table.up.sql	/^CREATE UNIQUE INDEX citizens_index_on_id ON citizens (id);$/;"	i
+citizens.contact_gate	internal/adapter/storage/sqlite/migration/000001_create_relationship_table.up.sql	/^    contact_gate VARCHAR(32) NOT NULL,$/;"	F
+citizens.id	internal/adapter/storage/sqlite/migration/000001_create_relationship_table.up.sql	/^    id INTEGER PRIMARY KEY AUTOINCREMENT,$/;"	F
+citizens.name	internal/adapter/storage/sqlite/migration/000001_create_relationship_table.up.sql	/^    name VARCHAR(255) NOT NULL,$/;"	F
+citizens.registration_date	internal/adapter/storage/sqlite/migration/000001_create_relationship_table.up.sql	/^    registration_date INTEGER NOT NULL$/;"	F
+cocoon	cmd/broker.go	/^package cocoon$/;"	p
+cocoon	external/cocoon/chan_handler.go	/^package cocoon$/;"	p
 cocoon	external/cocoon/cocoon.go	/^package cocoon$/;"	p
+cocoon	external/cocoon/contact_gate.go	/^package cocoon$/;"	p
+cocoon	internal/adapter/certificate/contact_gate.go	/^package cocoon$/;"	p
 config	internal/adapter/config/config.go	/^package config$/;"	p
 contacts	internal/adapter/storage/sqlite/migration/000002_create_contacts_table.up.sql	/^CREATE TABLE contacts ($/;"	t
 contacts.citizen_id	internal/adapter/storage/sqlite/migration/000002_create_contacts_table.up.sql	/^  citizen_id INTEGER NOT NULL,$/;"	F
@@ -92,7 +111,6 @@ letters.id	internal/adapter/storage/sqlite/migration/000003_create_letters_table
 letters.letters_index_on_code_foreign_id_commit_time	internal/adapter/storage/sqlite/migration/000003_create_letters_table.up.sql	/^CREATE UNIQUE INDEX letters_index_on_code_foreign_id_commit_time ON letters (code, foreign_id, commit_time);$/;"	i
 letters.letters_index_on_id	internal/adapter/storage/sqlite/migration/000003_create_letters_table.up.sql	/^CREATE UNIQUE INDEX letters_index_on_id ON letters (id);$/;"	i
 letters.message	internal/adapter/storage/sqlite/migration/000003_create_letters_table.up.sql	/^  message BLOB NOT NULL,$/;"	F
-main	cmd/broker.go	/^package main$/;"	p
 main	cmd/client.go	/^package main$/;"	p
 main	cmd/hub.go	/^package main$/;"	p
 main	cmd/main.go	/^func main() {$/;"	f

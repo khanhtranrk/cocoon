@@ -10,23 +10,19 @@ type LetterRepository interface {
 }
 
 type LetterService interface {
-  CreateUnprocessedLetter(letter *domain.Letter) (*domain.Letter, error)
-  CreateUnsentLaterLetter(letter *domain.Letter) (*domain.Letter, error)
+  CreateSuspiciousLetter(letter *domain.Letter) (*domain.Letter, error)
   CreateProcessedLetter(letter *domain.Letter) (*domain.Letter, error)
   CreateSentLetter(letter *domain.Letter) (*domain.Letter, error)
 
-  DeleteUnprocessedLetter(letter *domain.Letter) (*domain.Letter, error)
-  DeleteUnsentLetter(letter *domain.Letter) (*domain.Letter, error)
+  DeleteSuspiciousLetter(letter *domain.Letter) (*domain.Letter, error)
   DeleteProcessedLetter(letter *domain.Letter) (*domain.Letter, error)
   DeleteSentLetter(letter *domain.Letter) (*domain.Letter, error)
 
-  UpdateUnprocessedLetter(letter *domain.Letter) (*domain.Letter, error)
-  UpdateUnsentLetter(letter *domain.Letter) (*domain.Letter, error)
+  UpdateSuspiciousLetter(letter *domain.Letter) (*domain.Letter, error)
   UpdateProcessedLetter(letter *domain.Letter) (*domain.Letter, error)
   UpdateSentLetter(letter *domain.Letter) (*domain.Letter, error)
 
-  GetUnprocessedLetterById(id string) (*domain.Letter, error)
-  GetUnsentLetterById(id string) (*domain.Letter, error)
+  GetSuspiciousLetterById(id string) (*domain.Letter, error)
   GetProcessedLetterById(id string) (*domain.Letter, error)
   GetSentLetterById(id string) (*domain.Letter, error)
 }
