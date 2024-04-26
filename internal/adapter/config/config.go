@@ -5,13 +5,13 @@ import (
 )
 
 type Config struct {
-  BrokerUrl string
+  BrokerUrl   string
   DatabaseUrl string
 }
 
 func New() (*Config, error) {
   config := &Config{
-    BrokerUrl: os.Getenv("BROKER_URL"),
+    BrokerUrl:   os.Getenv("BROKER_URL"),
     DatabaseUrl: os.Getenv("DATABASE_URL"),
   }
 

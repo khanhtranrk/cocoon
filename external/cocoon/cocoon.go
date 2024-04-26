@@ -16,9 +16,27 @@ import (
 type Citizen = domain.Citizen
 type Contact = domain.Contact
 type Letter = domain.Letter
+type LetterType = domain.LetterType
+type LetterStatus = domain.LetterStatus
+
+const (
+  RequestType  LetterType = domain.Request
+  ResponseType LetterType = domain.Response
+
+  SystemErrorStatus  LetterStatus = domain.SystemError
+  LetterErrorStatus  LetterStatus = domain.LetterError
+
+  WaitingStatus      LetterStatus = domain.Waiting
+  KeepingStatus      LetterStatus = domain.Keeping
+  PendingStatus      LetterStatus = domain.Pending
+  DoneStatus         LetterStatus = domain.Done
+  MessageErrorStatus LetterStatus = domain.MessageError
+
+  SentStatus         LetterStatus = domain.Sent
+)
 
 type CocoonHandlerFuncs interface {
-  MessageHandler(msg []byte) (uint8, []byte, error)
+  MessageHandler(msg []byte) (LetterStatus, []byte, error)
 }
 
 type Cocoon struct {
@@ -77,64 +95,18 @@ func New() (*Cocoon, error) {
     SuspiciousLetterChan: make(chan *domain.Letter),
     ProcessRequestLetterChan: make(chan *domain.Letter),
     ProcessResponseLetterChan: make(chan *domain.Letter),
-    SendLetterChan: make(chan *domain.Letter),
+    SendRequestLetterChan: make(chan *domain.Letter),
+    SendResponseLetterChan: make(chan *domain.Letter),
     TerminateChan: make(chan *bool),
   }, nil
 }
 
-// HACK: queue "taistra" is fixed value
-// OPTIMIZE: This code snippet violates the DRY principle
-func (c *Cocoon) SendRequestLetter(lt *Letter) error {
-  var sigEnc uint8 = 24
-  var verEnc uint8 = 1
-  var typEnc uint8 = 1
-
-  codeEnc := make([]byte, 8)
-  binary.BigEndian.PutUint64(codeEnc, lt.Code)
-
-  senderIdEnc := make([]byte, 8)
-  binary.BigEndian.PutUint64(senderIdEnc, c.Cert.Id)
-
-  receiverIdEnc := make([]byte, 8)
-  binary.BigEndian.PutUint64(receiverIdEnc, lt.ForeignId)
-
-  commitTimeEnc := make([]byte, 8)
-  binary.BigEndian.PutUint64(commitTimeEnc, lt.CommitTime)
-
-  lenOfMsgEnc := make([]byte, 4)
-  binary.BigEndian.PutUint32(lenOfMsgEnc, uint32(len(lt.Message)))
-
-  var dv []byte
-  dv = append(dv, sigEnc)
-  dv = append(dv, verEnc)
-  dv = append(dv, typEnc)
-  dv = append(dv, codeEnc...)
-  dv = append(dv, senderIdEnc...)
-  dv = append(dv, receiverIdEnc...)
-  dv = append(dv, commitTimeEnc...)
-  dv = append(dv, lenOfMsgEnc...)
-  dv = append(dv, lt.Message...)
-
-  // find contact to give gate
-  ct, err := c.ContactService.GetContactByCitizenId(lt.ForeignId)
-  if err != nil {
-    return err
-  }
-
-  if ct != nil {
-    return fmt.Errorf("SendResponseLetter: Could not find contact with CitizenId = %v", lt.ForeignId)
-  }
-
-  return c.Broker.SendMessage(ct.Gate, dv)
-}
-
-// HACK: queue "taistra" is fixed value
-// OPTIMIZE: This code snippet violates the DRY principle
-func (c *Cocoon) SendResponseLetter(lt *Letter) error {
+func (c *Cocoon) SendLetter(lt *Letter) error {
+  // header
   var sig uint8 = 24
   var ver uint8 = 1
-  lt.Type = 2
 
+  // Delivery infos
   code := make([]byte, 8)
   binary.BigEndian.PutUint64(code, lt.Code)
 
@@ -150,6 +122,7 @@ func (c *Cocoon) SendResponseLetter(lt *Letter) error {
   lenOfMsg := make([]byte, 4)
   binary.BigEndian.PutUint32(lenOfMsg, uint32(len(lt.Message)))
 
+  // letter
   var dv []byte
   dv = append(dv, sig)
   dv = append(dv, ver)
@@ -161,14 +134,14 @@ func (c *Cocoon) SendResponseLetter(lt *Letter) error {
   dv = append(dv, lenOfMsg...)
   dv = append(dv, lt.Message...)
 
-  // find contact to give gate
+  // find gate of foreign
   ct, err := c.ContactService.GetContactByCitizenId(lt.ForeignId)
   if err != nil {
     return err
   }
 
   if ct != nil {
-    return fmt.Errorf("SendResponseLetter: Could not find contact with CitizenId = %v", lt.ForeignId)
+    return fmt.Errorf("SendLetter: Could not find contact with CitizenId = %v", lt.ForeignId)
   }
 
   return c.Broker.SendMessage(ct.Gate, dv)

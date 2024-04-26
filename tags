@@ -33,22 +33,36 @@ DeleteLetter	internal/adapter/storage/sqlite/repository/letter.go	/^func (lt *Le
 DeleteProccessedLetter	internal/core/service/letter.go	/^func (ls *LetterService) DeleteProccessedLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
 DeleteSentLetter	internal/core/service/letter.go	/^func (ls *LetterService) DeleteSentLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
 DeleteSuspiciousLetter	internal/core/service/letter.go	/^func (ls *LetterService) DeleteSuspiciousLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
+Done	internal/core/domain/letter.go	/^  Done         LetterStatus = 24$/;"	c
+DoneStatus	external/cocoon/cocoon.go	/^  DoneStatus         LetterStatus = domain.Done$/;"	c
+ExistsIncompleteReferLetter	internal/adapter/storage/sqlite/repository/letter.go	/^func (lt *LetterRepository) ExistsIncompleteReferLetter(id uint64) (*domain.Letter, error) {$/;"	f
 GetCitizenById	internal/adapter/storage/sqlite/repository/citizen.go	/^func (cr *CitizenRepository) GetCitizenById(id uint64) (*domain.Citizen, error) {$/;"	f
 GetCitizenById	internal/core/service/citizen.go	/^func (cs *CitizenService) GetCitizenById(id uint64) (*domain.Citizen, error) {$/;"	f
 GetContactByCitizenId	internal/adapter/storage/sqlite/repository/contact.go	/^func (cr *ContactRepository) GetContactByCitizenId(id uint64) (*domain.Contact, error) {$/;"	f
 GetContactByCitizenId	internal/core/service/contact.go	/^func (cs *ContactService) GetContactByCitizenId(contactId uint64) (*domain.Contact, error) {$/;"	f
+GetLetterByCodeAndCommitTimeAndForeign	internal/adapter/storage/sqlite/repository/letter.go	/^func (lt *LetterRepository) GetLetterByCodeAndCommitTimeAndForeign(code uint64, commitTime uint64, foreignId uint64, tableName string) (*domain.Letter, error) {$/;"	f
 GetLetterById	internal/adapter/storage/sqlite/repository/letter.go	/^func (lt *LetterRepository) GetLetterById(id uint64, tableName string) (*domain.Letter, error) {$/;"	f
 GetProccessedLetterById	internal/core/service/letter.go	/^func (ls *LetterService) GetProccessedLetterById(id uint64) (*domain.Letter, error) {$/;"	f
+GetReferLetter	internal/adapter/storage/sqlite/repository/letter.go	/^func (lt *LetterRepository) GetReferLetter(id uint64) (*domain.Letter, error) {$/;"	f
+GetSentLetterByCodeAndCommitTimeAndForeignId	internal/core/service/letter.go	/^func (ls *LetterService) GetSentLetterByCodeAndCommitTimeAndForeignId(code uint64, commitTime uint64, foreignId uint64) (*domain.Letter, error) {$/;"	f
 GetSentLetterById	internal/core/service/letter.go	/^func (ls *LetterService) GetSentLetterById(id uint64) (*domain.Letter, error) {$/;"	f
 GetSuspiciousLetterById	internal/core/service/letter.go	/^func (ls *LetterService) GetSuspiciousLetterById(id uint64) (*domain.Letter, error) {$/;"	f
 Hub	cmd/hub.go	/^type Hub struct {$/;"	t
 Keeper	external/cocoon/contact_gate.go	/^func (c *Cocoon) Keeper(dv []byte) {$/;"	f
+Keeping	internal/core/domain/letter.go	/^  Keeping      LetterStatus = 22$/;"	c
+KeepingStatus	external/cocoon/cocoon.go	/^  KeepingStatus      LetterStatus = domain.Keeping$/;"	c
 Letter	external/cocoon/cocoon.go	/^type Letter = domain.Letter$/;"	t
 Letter	internal/core/domain/letter.go	/^type Letter struct {$/;"	t
+LetterError	internal/core/domain/letter.go	/^  LetterError  LetterStatus = 12$/;"	c
+LetterErrorStatus	external/cocoon/cocoon.go	/^  LetterErrorStatus  LetterStatus = domain.LetterError$/;"	c
 LetterRepository	internal/adapter/storage/sqlite/repository/letter.go	/^type LetterRepository struct {$/;"	t
 LetterRepository	internal/core/port/letter.go	/^type LetterRepository interface {$/;"	t
 LetterService	internal/core/port/letter.go	/^type LetterService interface {$/;"	t
 LetterService	internal/core/service/letter.go	/^type LetterService struct {$/;"	t
+LetterStatus	external/cocoon/cocoon.go	/^type LetterStatus = domain.LetterStatus$/;"	t
+LetterStatus	internal/core/domain/letter.go	/^type LetterStatus uint8$/;"	t
+LetterType	external/cocoon/cocoon.go	/^type LetterType = domain.LetterType$/;"	t
+LetterType	internal/core/domain/letter.go	/^type LetterType uint8$/;"	t
 ListAllCitizens	internal/adapter/storage/sqlite/repository/citizen.go	/^func (cr *CitizenRepository) ListAllCitizens() ([]*domain.Citizen, error) {$/;"	f
 ListAllCitizens	internal/core/service/citizen.go	/^func (cs *CitizenService) ListAllCitizens() ([]*domain.Citizen, error) {$/;"	f
 ListAllContacts	internal/adapter/storage/sqlite/repository/contact.go	/^func (cr *ContactRepository) ListAllContacts() ([]*domain.Contact, error) {$/;"	f
@@ -56,8 +70,9 @@ ListAllContacts	internal/core/service/contact.go	/^func (cs *ContactService) Lis
 Listen	cmd/broker.go	/^func (b *Broker) Listen(queue string, outChan chan []byte) {$/;"	f
 Listen	internal/adapter/handler/amqp/broker.go	/^func (b *Broker) Listen(queue string, outChan chan []byte) {$/;"	f
 ListenContactGate	external/cocoon/contact_gate.go	/^func (c *Cocoon) ListenContactGate()  {$/;"	f
-ListenContactGate	internal/adapter/certificate/contact_gate.go	/^func (c *Cocoon) ListenContactGate()  {$/;"	f
 LoadAbilityCertificate	internal/adapter/certificate/certificate.go	/^func LoadAbilityCertificate() (*Certificate, error) {$/;"	f
+MessageError	internal/core/domain/letter.go	/^  MessageError LetterStatus = 25$/;"	c
+MessageErrorStatus	external/cocoon/cocoon.go	/^  MessageErrorStatus LetterStatus = domain.MessageError$/;"	c
 New	external/cocoon/cocoon.go	/^func New() (*Cocoon, error) {$/;"	f
 New	internal/adapter/config/config.go	/^func New() (*Config, error) {$/;"	f
 New	internal/adapter/handler/amqp/broker.go	/^func New(cfg *config.Config) (*Broker, error) {$/;"	f
@@ -69,37 +84,48 @@ NewContactRepository	internal/adapter/storage/sqlite/repository/contact.go	/^fun
 NewContactService	internal/core/service/contact.go	/^func NewContactService(rp port.ContactRepository) *ContactService {$/;"	f
 NewLetterRepository	internal/adapter/storage/sqlite/repository/letter.go	/^func NewLetterRepository(db *sql.DB) *LetterRepository {$/;"	f
 NewLetterService	internal/core/service/letter.go	/^func NewLetterService(lr port.LetterRepository) *LetterService {$/;"	f
+Pending	internal/core/domain/letter.go	/^  Pending      LetterStatus = 23$/;"	c
+PendingStatus	external/cocoon/cocoon.go	/^  PendingStatus      LetterStatus = domain.Pending$/;"	c
 ProcessRequestLetterChanHandler	external/cocoon/chan_handler.go	/^func (c *Cocoon) ProcessRequestLetterChanHandler() {$/;"	f
 ProcessResponseLetterChanHandler	external/cocoon/chan_handler.go	/^func (c *Cocoon) ProcessResponseLetterChanHandler() {$/;"	f
+Request	internal/core/domain/letter.go	/^  Request  LetterType = 1$/;"	c
+RequestType	external/cocoon/cocoon.go	/^  RequestType  LetterType = domain.Request$/;"	c
+Response	internal/core/domain/letter.go	/^  Response LetterType = 2$/;"	c
+ResponseType	external/cocoon/cocoon.go	/^  ResponseType LetterType = domain.Response$/;"	c
+SendLetter	external/cocoon/cocoon.go	/^func (c *Cocoon) SendLetter(lt *Letter) error {$/;"	f
 SendMessage	cmd/broker.go	/^func (b *Broker) SendMessage(queue string, msg []byte) error {$/;"	f
 SendMessage	internal/adapter/handler/amqp/broker.go	/^func (b *Broker) SendMessage(queue string, msg []byte) error {$/;"	f
-SendRequestLetter	external/cocoon/cocoon.go	/^func (c *Cocoon) SendRequestLetter(lt *Letter) error {$/;"	f
 SendRequestLetterChanHandler	external/cocoon/chan_handler.go	/^func (c *Cocoon) SendRequestLetterChanHandler() {$/;"	f
-SendResponseLetter	external/cocoon/cocoon.go	/^func (c *Cocoon) SendResponseLetter(lt *Letter) error {$/;"	f
 SendResponseLetterChanHandler	external/cocoon/chan_handler.go	/^func (c *Cocoon) SendResponseLetterChanHandler() {$/;"	f
+Sent	internal/core/domain/letter.go	/^  Sent         LetterStatus = 31$/;"	c
+SentStatus	external/cocoon/cocoon.go	/^  SentStatus         LetterStatus = domain.Sent$/;"	c
 SuspiciousLetterChanHandler	external/cocoon/chan_handler.go	/^func (c *Cocoon) SuspiciousLetterChanHandler() {$/;"	f
+SystemError	internal/core/domain/letter.go	/^  SystemError  LetterStatus = 11$/;"	c
+SystemErrorStatus	external/cocoon/cocoon.go	/^  SystemErrorStatus  LetterStatus = domain.SystemError$/;"	c
 UpdateLetter	internal/adapter/storage/sqlite/repository/letter.go	/^func (lt *LetterRepository) UpdateLetter(letter *domain.Letter, tableName string) (*domain.Letter, error) {$/;"	f
 UpdateProccessedLetter	internal/core/service/letter.go	/^func (ls *LetterService) UpdateProccessedLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
 UpdateSentLetter	internal/core/service/letter.go	/^func (ls *LetterService) UpdateSentLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
 UpdateSuspiciousLetter	internal/core/service/letter.go	/^func (ls *LetterService) UpdateSuspiciousLetter(letter *domain.Letter) (*domain.Letter, error) {$/;"	f
+Waiting	internal/core/domain/letter.go	/^  Waiting      LetterStatus = 21$/;"	c
+WaitingStatus	external/cocoon/cocoon.go	/^  WaitingStatus      LetterStatus = domain.Waiting$/;"	c
 addr	cmd/main.go	/^var addr = flag.String("addr", ":8080", "http service address")$/;"	v
 amqp	internal/adapter/handler/amqp/broker.go	/^package amqp$/;"	p
 certificate	internal/adapter/certificate/certificate.go	/^package certificate$/;"	p
 citizens	internal/adapter/storage/sqlite/migration/000001_create_relationship_table.up.sql	/^CREATE TABLE citizens ($/;"	t
 citizens.citizens_index_on_id	internal/adapter/storage/sqlite/migration/000001_create_relationship_table.up.sql	/^CREATE UNIQUE INDEX citizens_index_on_id ON citizens (id);$/;"	i
-citizens.contact_gate	internal/adapter/storage/sqlite/migration/000001_create_relationship_table.up.sql	/^    contact_gate VARCHAR(32) NOT NULL,$/;"	F
-citizens.id	internal/adapter/storage/sqlite/migration/000001_create_relationship_table.up.sql	/^    id INTEGER PRIMARY KEY AUTOINCREMENT,$/;"	F
-citizens.name	internal/adapter/storage/sqlite/migration/000001_create_relationship_table.up.sql	/^    name VARCHAR(255) NOT NULL,$/;"	F
-citizens.registration_date	internal/adapter/storage/sqlite/migration/000001_create_relationship_table.up.sql	/^    registration_date INTEGER NOT NULL$/;"	F
+citizens.contact_gate	internal/adapter/storage/sqlite/migration/000001_create_relationship_table.up.sql	/^  contact_gate VARCHAR(32) NOT NULL,$/;"	F
+citizens.id	internal/adapter/storage/sqlite/migration/000001_create_relationship_table.up.sql	/^  id INTEGER PRIMARY KEY AUTOINCREMENT,$/;"	F
+citizens.name	internal/adapter/storage/sqlite/migration/000001_create_relationship_table.up.sql	/^  name VARCHAR(255) NOT NULL,$/;"	F
+citizens.registration_date	internal/adapter/storage/sqlite/migration/000001_create_relationship_table.up.sql	/^  registration_date INTEGER NOT NULL$/;"	F
 cocoon	cmd/broker.go	/^package cocoon$/;"	p
 cocoon	external/cocoon/chan_handler.go	/^package cocoon$/;"	p
 cocoon	external/cocoon/cocoon.go	/^package cocoon$/;"	p
 cocoon	external/cocoon/contact_gate.go	/^package cocoon$/;"	p
-cocoon	internal/adapter/certificate/contact_gate.go	/^package cocoon$/;"	p
 config	internal/adapter/config/config.go	/^package config$/;"	p
 contacts	internal/adapter/storage/sqlite/migration/000002_create_contacts_table.up.sql	/^CREATE TABLE contacts ($/;"	t
 contacts.citizen_id	internal/adapter/storage/sqlite/migration/000002_create_contacts_table.up.sql	/^  citizen_id INTEGER NOT NULL,$/;"	F
 contacts.contacts_index_on_citizen_id	internal/adapter/storage/sqlite/migration/000002_create_contacts_table.up.sql	/^CREATE UNIQUE INDEX contacts_index_on_citizen_id ON contacts (citizen_id);$/;"	i
+contacts.gate	internal/adapter/storage/sqlite/migration/000002_create_contacts_table.up.sql	/^  gate VARCHAR(32) NOT NULL,$/;"	F
 domain	internal/core/domain/citizen.go	/^package domain$/;"	p
 domain	internal/core/domain/contact.go	/^package domain$/;"	p
 domain	internal/core/domain/letter.go	/^package domain$/;"	p
@@ -111,6 +137,7 @@ letters.id	internal/adapter/storage/sqlite/migration/000003_create_letters_table
 letters.letters_index_on_code_foreign_id_commit_time	internal/adapter/storage/sqlite/migration/000003_create_letters_table.up.sql	/^CREATE UNIQUE INDEX letters_index_on_code_foreign_id_commit_time ON letters (code, foreign_id, commit_time);$/;"	i
 letters.letters_index_on_id	internal/adapter/storage/sqlite/migration/000003_create_letters_table.up.sql	/^CREATE UNIQUE INDEX letters_index_on_id ON letters (id);$/;"	i
 letters.message	internal/adapter/storage/sqlite/migration/000003_create_letters_table.up.sql	/^  message BLOB NOT NULL,$/;"	F
+letters.typ	internal/adapter/storage/sqlite/migration/000003_create_letters_table.up.sql	/^  typ INTEGER NOT NULL,$/;"	F
 main	cmd/client.go	/^package main$/;"	p
 main	cmd/hub.go	/^package main$/;"	p
 main	cmd/main.go	/^func main() {$/;"	f
@@ -138,6 +165,5 @@ service	internal/core/service/letter.go	/^package service$/;"	p
 space	cmd/client.go	/^	space   = []byte{' '}$/;"	v
 sqlite	internal/adapter/storage/sqlite/db.go	/^package sqlite$/;"	p
 upgrader	cmd/client.go	/^var upgrader = websocket.Upgrader{$/;"	v
-util	internal/core/util/letter.go	/^package util$/;"	p
 writePump	cmd/client.go	/^func (c *Client) writePump() {$/;"	f
 writeWait	cmd/client.go	/^	writeWait = 10 * time.Second$/;"	c

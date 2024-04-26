@@ -81,3 +81,45 @@ Cocoon
 |- Mailily < Cocoon
 |- Taska < Cocoon
 
+
+Rule:
+    (letter) -> Send Response (set status = 2) | Send Request (set status = 1) | auto
+    After creae or update recored point need to update some field to suitable with context
+
+Ability:
+    Citizens Id, Gate,....
+    Contact CitizenId, Permission,....
+
+No Taistra:
+- Peer to Peer
+- Freedom
+
+cocoon.db | safety.dat | 
+
+safety: use to safe error data when it cannot connect database
+
+
+DB store:
+    Unprocessed Letter
+    Processed Letter
+    Sent Letter
+
+
+Unprocessed Letter:
+    status:
+        system_error
+        letter_error
+Processed Letter:
+    status:
+        waiting
+        keep
+        pending
+        done
+        system_error
+        message_error
+Sent Letter:
+    status:
+        sent
+        system_error
+
+Safty Mechanisms

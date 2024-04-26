@@ -25,5 +25,6 @@ type LetterService interface {
   GetSuspiciousLetterById(id string) (*domain.Letter, error)
   GetProcessedLetterById(id string) (*domain.Letter, error)
   GetSentLetterById(id string) (*domain.Letter, error)
+  GetSentLetterByCodeAndCommitTimeAndForeignId(code uint64, commitTime uint64, foreignId uint64) (*domain.Letter, error)
 }
 

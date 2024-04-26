@@ -5,7 +5,7 @@ func (c *Cocoon) SuspiciousLetterChanHandler() {
   for lt := range c.SuspiciousLetterChan {
     _, err := c.LetterService.CreateSuspiciousLetter(lt)
     if err != nil {
-      // save to must be true
+      // save to safety, current to pass it
     }
   }
 }
@@ -17,7 +17,7 @@ func (c *Cocoon) ProcessRequestLetterChanHandler() {
 
     if err != nil {
       lt.Message = append([]byte{0}, []byte(err.Error())...)
-      c.SendResponseLetterChan <-lt
+      c.SendRequestLetterChan <-lt
       return
     }
 
@@ -27,17 +27,35 @@ func (c *Cocoon) ProcessRequestLetterChanHandler() {
       // save to must be true
     }
 
-
     lt.Message = msg
-    c.SendResponseLetterChan <-lt
+    c.SendRequestLetterChan <-lt
   }
 }
 
 // TODO: logic
 func (c *Cocoon) ProcessResponseLetterChanHandler() {
   for lt := range c.ProcessRequestLetterChan {
-    // find letter in sent letter
-    // set to done
+    rq, err := c.LetterService.GetSentLetterByCodeAndCommitTimeAndForeignId(lt.Code, lt.CommitTime, lt.ForeignId)
+    if err != nil {
+      lt.Status = SystemErrorStatus
+      _, err = c.LetterService.UpdateProcessedLetter(lt)
+      if err != nil {
+        // save task to safety
+      }
+      return
+    }
+
+    if rq == nil {
+      lt.Status = LetterErrorStatus
+      _, err := c.LetterService.UpdateProcessedLetter(lt)
+      if err != nil {
+        // save task to safety
+      }
+    }
+
+    lt.Status = DoneStatus
+
+    // ...
     // find refer
     // if exist ---> check done all ----> set done | keep ---> send response
     // else keep
@@ -47,30 +65,33 @@ func (c *Cocoon) ProcessResponseLetterChanHandler() {
 // TODO: logic
 func (c *Cocoon) SendResponseLetterChanHandler() {
   for lt := range c.SendResponseLetterChan {
-    err := c.SendResponseLetter(lt)
+    err := c.SendLetter(lt)
+    lt.Status = SentStatus
     if err != nil {
-      // update db
-      return
+      lt.Status = SystemErrorStatus
     }
 
-    // update
+    _, err = c.LetterService.CreateSentLetter(lt)
+
+    if err != nil {
+      // safety
+    }
   }
 }
 
 // TODO: logic
 func (c *Cocoon) SendRequestLetterChanHandler() {
   for lt := range c.SendRequestLetterChan {
-    if lt.Type == 1 {
-      err := c.SendRequestLetter(lt)
-      if err != nil {
-        // update db
-      }
-    }
-
-    err := c.SendResponseLetter(lt)
+    err := c.SendLetter(lt)
+    lt.Status = SentStatus
     if err != nil {
-      // update db
+      lt.Status = SystemErrorStatus
     }
 
+    _, err = c.LetterService.CreateSentLetter(lt)
+
+    if err != nil {
+      // safety
+    }
   }
 }

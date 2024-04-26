@@ -7,9 +7,9 @@ import (
 )
 
 type Certificate struct {
-  Id uint64 `yaml:"id"`
-  Name string `yaml:"name"`
-  ContactGate string `yaml:"contact_gate"`
+  Id               uint64 `yaml:"id"`
+  Name             string `yaml:"name"`
+  ContactGate      string `yaml:"contact_gate"`
   RegistrationDate uint64 `yaml:"registration_date"`
 }
 

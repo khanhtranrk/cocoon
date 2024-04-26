@@ -9,7 +9,7 @@ import (
 
 type Broker struct {
   Connection *amqp.Connection
-  Channel *amqp.Channel
+  Channel    *amqp.Channel
 }
 
 func New(cfg *config.Config) (*Broker, error) {

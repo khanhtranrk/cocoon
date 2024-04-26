@@ -61,3 +61,6 @@ func (ls *LetterService) GetSentLetterById(id uint64) (*domain.Letter, error) {
   return ls.lr.GetLetterById(id, "sent_letters")
 }
 
+func (ls *LetterService) GetSentLetterByCodeAndCommitTimeAndForeignId(code uint64, commitTime uint64, foreignId uint64) (*domain.Letter, error) {
+  return ls.lr.GetLetterById(code, commitTime, foreignId, "sent_letters")
+}

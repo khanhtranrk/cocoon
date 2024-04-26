@@ -16,7 +16,7 @@ func NewContactRepository(db *sql.DB) *ContactRepository {
 }
 
 func (cr *ContactRepository) ListAllContacts() ([]*domain.Contact, error) {
-  query := "SELECT citizen_id, permission FROM contacts"
+  query := "SELECT citizen_id, gate FROM contacts"
   rows, err := cr.db.Query(query)
   if err != nil {
     return nil, err
